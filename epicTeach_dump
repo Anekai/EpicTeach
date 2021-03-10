@@ -1,0 +1,446 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.7
+-- Dumped by pg_dump version 11.7
+
+-- Started on 2021-03-10 20:08:25
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 3 (class 2615 OID 2200)
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA public;
+
+
+ALTER SCHEMA public OWNER TO postgres;
+
+--
+-- TOC entry 2881 (class 0 OID 0)
+-- Dependencies: 3
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 199 (class 1259 OID 24645)
+-- Name: cidades; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cidades (
+    id_cidade integer NOT NULL,
+    id_estado integer NOT NULL,
+    tx_nome character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.cidades OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 24683)
+-- Name: dias_disponiveis; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.dias_disponiveis (
+    id_usuario integer NOT NULL,
+    dm_dia_semana character varying(10) NOT NULL
+);
+
+
+ALTER TABLE public.dias_disponiveis OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 24611)
+-- Name: disciplinas; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.disciplinas (
+    id_disciplina integer NOT NULL,
+    tx_nome character varying(100) NOT NULL,
+    tx_descricao character varying(500)
+);
+
+
+ALTER TABLE public.disciplinas OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 24635)
+-- Name: estados; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.estados (
+    id_estado integer NOT NULL,
+    id_pais integer NOT NULL,
+    tx_nome character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.estados OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 24693)
+-- Name: horarios_disponiveis; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.horarios_disponiveis (
+    id_horario integer NOT NULL,
+    id_usuario integer NOT NULL,
+    dm_dia_semana character varying(10) NOT NULL,
+    hr_inicio timestamp without time zone NOT NULL,
+    hr_fim timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.horarios_disponiveis OWNER TO postgres;
+
+--
+-- TOC entry 197 (class 1259 OID 24619)
+-- Name: paises; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.paises (
+    id_pais integer NOT NULL,
+    tx_nome character varying NOT NULL
+);
+
+
+ALTER TABLE public.paises OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 24703)
+-- Name: sessoes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.sessoes (
+    id_sessao integer NOT NULL,
+    id_aluno integer NOT NULL,
+    id_professor integer NOT NULL,
+    id_disciplina integer NOT NULL,
+    hr_inicio timestamp without time zone NOT NULL,
+    hr_fim timestamp without time zone NOT NULL,
+    dm_tipo character varying(20) NOT NULL
+);
+
+
+ALTER TABLE public.sessoes OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 24655)
+-- Name: usuarios; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.usuarios (
+    id_usuario integer NOT NULL,
+    tx_nome character varying(50) NOT NULL,
+    tx_email character varying(50) NOT NULL,
+    tx_senha character varying(50) NOT NULL,
+    id_cidade integer NOT NULL,
+    dt_cadastro date NOT NULL,
+    dt_autorizacao_prof date,
+    dm_professor character varying(3) NOT NULL,
+    dm_admin character varying(3) NOT NULL
+);
+
+
+ALTER TABLE public.usuarios OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 24665)
+-- Name: usuarios_disciplinas; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.usuarios_disciplinas (
+    id_usuario integer NOT NULL,
+    id_disciplina integer NOT NULL,
+    vl_hora numeric
+);
+
+
+ALTER TABLE public.usuarios_disciplinas OWNER TO postgres;
+
+--
+-- TOC entry 2870 (class 0 OID 24645)
+-- Dependencies: 199
+-- Data for Name: cidades; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.cidades (id_cidade, id_estado, tx_nome) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2873 (class 0 OID 24683)
+-- Dependencies: 202
+-- Data for Name: dias_disponiveis; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.dias_disponiveis (id_usuario, dm_dia_semana) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2867 (class 0 OID 24611)
+-- Dependencies: 196
+-- Data for Name: disciplinas; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.disciplinas (id_disciplina, tx_nome, tx_descricao) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2869 (class 0 OID 24635)
+-- Dependencies: 198
+-- Data for Name: estados; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.estados (id_estado, id_pais, tx_nome) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2874 (class 0 OID 24693)
+-- Dependencies: 203
+-- Data for Name: horarios_disponiveis; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.horarios_disponiveis (id_horario, id_usuario, dm_dia_semana, hr_inicio, hr_fim) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2868 (class 0 OID 24619)
+-- Dependencies: 197
+-- Data for Name: paises; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.paises (id_pais, tx_nome) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2875 (class 0 OID 24703)
+-- Dependencies: 204
+-- Data for Name: sessoes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.sessoes (id_sessao, id_aluno, id_professor, id_disciplina, hr_inicio, hr_fim, dm_tipo) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2871 (class 0 OID 24655)
+-- Dependencies: 200
+-- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.usuarios (id_usuario, tx_nome, tx_email, tx_senha, id_cidade, dt_cadastro, dt_autorizacao_prof, dm_professor, dm_admin) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2872 (class 0 OID 24665)
+-- Dependencies: 201
+-- Data for Name: usuarios_disciplinas; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.usuarios_disciplinas (id_usuario, id_disciplina, vl_hora) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2725 (class 2606 OID 24649)
+-- Name: cidades cidades_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cidades
+    ADD CONSTRAINT cidades_pkey PRIMARY KEY (id_cidade);
+
+
+--
+-- TOC entry 2731 (class 2606 OID 24687)
+-- Name: dias_disponiveis dias_disponiveis_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dias_disponiveis
+    ADD CONSTRAINT dias_disponiveis_pkey PRIMARY KEY (id_usuario, dm_dia_semana);
+
+
+--
+-- TOC entry 2719 (class 2606 OID 24618)
+-- Name: disciplinas disciplinas_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.disciplinas
+    ADD CONSTRAINT disciplinas_pkey PRIMARY KEY (id_disciplina);
+
+
+--
+-- TOC entry 2723 (class 2606 OID 24639)
+-- Name: estados estados_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.estados
+    ADD CONSTRAINT estados_pkey PRIMARY KEY (id_estado);
+
+
+--
+-- TOC entry 2733 (class 2606 OID 24697)
+-- Name: horarios_disponiveis horarios_disponiveis_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.horarios_disponiveis
+    ADD CONSTRAINT horarios_disponiveis_pkey PRIMARY KEY (id_horario);
+
+
+--
+-- TOC entry 2721 (class 2606 OID 24626)
+-- Name: paises paises_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.paises
+    ADD CONSTRAINT paises_pkey PRIMARY KEY (id_pais);
+
+
+--
+-- TOC entry 2735 (class 2606 OID 24707)
+-- Name: sessoes sessoes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sessoes
+    ADD CONSTRAINT sessoes_pkey PRIMARY KEY (id_sessao);
+
+
+--
+-- TOC entry 2729 (class 2606 OID 24672)
+-- Name: usuarios_disciplinas usuarios_disciplinas_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuarios_disciplinas
+    ADD CONSTRAINT usuarios_disciplinas_pkey PRIMARY KEY (id_usuario, id_disciplina);
+
+
+--
+-- TOC entry 2727 (class 2606 OID 24659)
+-- Name: usuarios usuarios_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuarios
+    ADD CONSTRAINT usuarios_pkey PRIMARY KEY (id_usuario);
+
+
+--
+-- TOC entry 2743 (class 2606 OID 24708)
+-- Name: sessoes fk_alunos; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sessoes
+    ADD CONSTRAINT fk_alunos FOREIGN KEY (id_aluno) REFERENCES public.usuarios(id_usuario);
+
+
+--
+-- TOC entry 2738 (class 2606 OID 24660)
+-- Name: usuarios fk_cidades; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuarios
+    ADD CONSTRAINT fk_cidades FOREIGN KEY (id_cidade) REFERENCES public.cidades(id_cidade);
+
+
+--
+-- TOC entry 2742 (class 2606 OID 24698)
+-- Name: horarios_disponiveis fk_dias_disponiveis; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.horarios_disponiveis
+    ADD CONSTRAINT fk_dias_disponiveis FOREIGN KEY (id_usuario, dm_dia_semana) REFERENCES public.dias_disponiveis(id_usuario, dm_dia_semana);
+
+
+--
+-- TOC entry 2740 (class 2606 OID 24678)
+-- Name: usuarios_disciplinas fk_disciplinas; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuarios_disciplinas
+    ADD CONSTRAINT fk_disciplinas FOREIGN KEY (id_disciplina) REFERENCES public.disciplinas(id_disciplina);
+
+
+--
+-- TOC entry 2745 (class 2606 OID 24718)
+-- Name: sessoes fk_disciplinas; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sessoes
+    ADD CONSTRAINT fk_disciplinas FOREIGN KEY (id_disciplina) REFERENCES public.disciplinas(id_disciplina);
+
+
+--
+-- TOC entry 2737 (class 2606 OID 24650)
+-- Name: cidades fk_estados; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cidades
+    ADD CONSTRAINT fk_estados FOREIGN KEY (id_estado) REFERENCES public.estados(id_estado);
+
+
+--
+-- TOC entry 2736 (class 2606 OID 24640)
+-- Name: estados fk_paises; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.estados
+    ADD CONSTRAINT fk_paises FOREIGN KEY (id_pais) REFERENCES public.paises(id_pais) NOT VALID;
+
+
+--
+-- TOC entry 2744 (class 2606 OID 24713)
+-- Name: sessoes fk_professores; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sessoes
+    ADD CONSTRAINT fk_professores FOREIGN KEY (id_professor) REFERENCES public.usuarios(id_usuario);
+
+
+--
+-- TOC entry 2739 (class 2606 OID 24673)
+-- Name: usuarios_disciplinas fk_usuarios; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuarios_disciplinas
+    ADD CONSTRAINT fk_usuarios FOREIGN KEY (id_usuario) REFERENCES public.usuarios(id_usuario);
+
+
+--
+-- TOC entry 2741 (class 2606 OID 24688)
+-- Name: dias_disponiveis fk_usuarios; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dias_disponiveis
+    ADD CONSTRAINT fk_usuarios FOREIGN KEY (id_usuario) REFERENCES public.usuarios(id_usuario);
+
+
+-- Completed on 2021-03-10 20:08:26
+
+--
+-- PostgreSQL database dump complete
+--
+
